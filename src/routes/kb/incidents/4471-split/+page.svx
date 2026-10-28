@@ -1,0 +1,59 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: olbartek
+status: proposed
+reviewed: 2026-10-28
+signature: olbartek
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/olbartek/support-kb/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) says one issue with one fix queued. Read the bodies, not the subjects,
+and it holds three problems. The parser fix covers only the first. The other two stay broken after
+it ships, and #4471 would close over them.
+
+<Callout kind="warn">
+Not one issue. Three tickets, one per problem below. Each report counts once, in one of them.
+</Callout>
+
+## The split
+
+<ProblemTable ticket={4471} {issues} />
+
+## The three problems
+
+**`parser`: the shared parser reads dates month first.** Every tenant on file writes the day
+first. A booking for 7 April goes out as 4 July. This is the fix #4471 already queued.
+
+**`hint`: booking-v3 prints `MM/DD/YYYY` under its date field.** At the tenants on booking-v3,
+people type what the hint shows, month first, and the form reads it day first. Only reports through
+the form, only at those tenants. The parser fix does not touch it: the hint has to change.
+
+**`one-day`: the date moves by one day, it does not swap.** "Client in Lisbon got Tuesday. Client in
+Toronto got Monday." The desk already read these five as a one-day move
+(`desk-notes.json`), but the table on #4471 still counts them under `parser`. Day and month are
+not swapped in any of them, so the parser fix will not change them. It looks like a time-zone
+conversion, and it needs its own owner.
+
+## Why they were merged
+
+[Triage](/kb/triage/dedupe) merges on the subject line alone
+([decision 0001](/kb/decisions/0001-dedupe-by-subject)), and every report here had a subject about
+a wrong date. That page has not been re-read since 2024. Intake's tags did not help either: they
+disagree with the tenant's cause on dozens of reports. Read a report's tenant, channel and body
+before you merge it.
+
+## What this page does not change
+
+#4471 and decision 0001 stay as they are. Splitting the ticket and replacing the decision is the
+desk's call; this page gives the counts for it.
+
+<RenderStamp {signature} />
