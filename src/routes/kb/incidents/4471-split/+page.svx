@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: olbartek
 status: proposed
 reviewed: 2026-10-28
-signature: olbartek
+signature: 'v1.eyJzdWIiOiI2NTEyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMTkzMjMsImV4cCI6MTc5MzMwNTcyM30.8WyyGbjaNi90n_s94ACWO6ABYrZaJu94QVHv-hJ1QJE'
 ---
 
 <script>
